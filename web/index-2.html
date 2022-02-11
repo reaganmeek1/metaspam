@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #body{
+            background-color: aqua;
+        }
+        .header{
+            text-align: center;
+            padding-top: 5px;
+	        padding-bottom: 5px;
+        }
+        .prompting{
+            text-align: center;
+        }
+        #msg_below{
+            color: grey;
+            
+        }
+
+
+    </style>
+</head>
+<body>
+    <div class="header">
+       <h1> Metaspam </h1> 
+       <p <style = "font-family: Monospace"> the future of communication</p>
+    </div>
+    <div class = "container">
+        <div class = "row mt-4">
+            <div class="col-12 col-md-4 section py-3 customize" id="prompting">
+                <h2>Post A Message</h2>
+                <form id="msg_text">
+                    <div class="form-group">
+                        <label for="prompt">Type your message below:</label>
+                        <input type="text" class="form-control" id="text" placeholder="Enter message" autocomplete="off">
+                        <small id="msg_below" class="form-text">remember . . . it's there forever :)</small>
+                    </div>
+                </form>
+            </div>
+            </div>
+            <div class = "row">
+                
+                <div class="row">
+                    <div class="col-12 mt-3">
+                        <form id="buttons">
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-primary">Post</button>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="tshirt-font">Filter</label>
+                                <select id="tshirt-font" class="form-control">
+                                    <option value="Arial">New to Old</option>
+                                    <option value="Times New Roman">Old to New</option>
+                                    <option value="Verdana">Longest</option>
+                                    <option value="Monospace">Shortest</option>
+                                </select>
+                            </div>
+
+                        </form>
+                        
+                        <button id="show-all-btn" class="btn btn-outline-primary mb-3">Show All Messages</button>
+
+            </div>
+            
+                </div> <!-- .col -->
+            </div><!-- .row -->
+            <!-- need a background color (light blue), do grid spacing with jss for header adn form and other shit-->
+            <!-- make a form, with event click handler for post, just one though-->
+            
+
+    </div>
+   
+    
+
+    </div>
+    
+
+    <script>    
+
+    //post messages
+
+    document.querySelector("").onsubmit = function(){
+			event.preventDefault();
+			
+			let textint = document.querySelector("#tshirt-text").value.trim();
+
+			if(textint.length < 1 || textint.length > 20){
+				let errormsg = document.querySelector(".error-message");
+				document.querySelector("#tshirt-text").classList.add("is-invalid");
+				errormsg.style.visibility = "visible";
+				if(textint.length < 1){
+					errormsg.innerHTML = "Text needed";
+				}
+				if(textint.length > 20){
+					errormsg.innerHTML = "Text cannot be longer than 20 characters";
+				}
+
+				
+				//invoke css class?
+
+
+			}
+        }
+
+    //see all messages
+    //filter messages
+    
+    </script>
+    
+</body>
+</html>

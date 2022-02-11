@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Contact List using Objects</title>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+</head>
+<body>
+	<div class="container">
+		<div class="row mt-4">
+			<h1 class="col-12">MetaSpam</h1>
+			<h2 class="col-12 mt-4">New Spam</h2>
+			<div class="col-12 mt-4">
+				<form id="contact-form">
+					<div class="form-row">
+
+						<div class="col-12 mt-2 col-sm-3 mt-sm-0">
+							<label for="spam"  class="sr-only">Message:</label>
+							<input type="text" class="form-control" id="spam" placeholder="your spam here :)">
+						</div> <!-- .col -->
+						<div class="col-12 mt-2 col-sm-auto mt-sm-0">
+							<button role="button" type="submit" id="add-contact-button" class="btn btn-primary">Post</button>
+						</div> <!-- .col -->
+
+					</div> <!-- .form-row -->
+				</form>
+			</div> <!-- .col -->
+		</div> <!-- .row -->
+
+		<div class="row">
+			<h2 class="col-12 mt-4">Spams</h2>
+		</div> <!-- .row -->
+
+		<div class="row">
+			<div class="col-12 mt-3">
+				<!-- <button id="show-all-btn" class="btn btn-outline-primary mb-3"></button> -->
+			</div> <!-- .col -->
+		</div><!-- .row -->
+
+		<div class="row">
+			<div class="col-12 mt-3">
+				<ul class="list-group" id="contact-list">
+					<!-- Below is the template that all contacts should follow -->
+					<!-- <li class="list-group-item">Trojan, Tommy (ttrojan@usc.edu)</li> -->
+				</ul>
+			</div> <!-- .col -->
+
+		</div> <!-- .row -->
+	</div> <!-- .container -->
+
+	<script>
+		let spams = []
+        getPostsFromServer();
+		updatePosts()
+
+		document.querySelector("#add-contact-button").onclick = function(){
+			event.preventDefault()
+			let spam = document.querySelector("#spam").value;
+			if(spam.length >= 1){
+				spams.push(spam);
+                updatePosts()
+				postToServer(spam)
+			}
+		}
+
+		document.querySelector("#show-all-btn").onclick = function(){
+			updatePosts()
+		}
+
+		function updatePosts() {
+			let contnr = document.querySelector(".list-group");
+			contnr.replaceChildren();
+			for(let i = 0; i < spams.length; i++){
+				let htmlString = `<li class = "list-group-item"> ${spams[i]}</li>`;
+				document.querySelector("#contact-list").innerHTML += htmlString;
+			}
+		}
+
+		function getPostsFromServer() {
+            fetch('/spams')
+                .then(response => response.json())
+                .then((jsonData) => {
+                    console.log('spams = ', jsonData)
+                    spams = jsonData
+                    updatePosts()
+                })
+        }
+
+		function postToServer(spam) {
+            fetch('/spam', {
+                method: 'post',
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ message: spam })
+            }).then(response => response.json())
+            .then((jsonData) => { 
+                console.log(jsonData)
+                updatePosts()
+            })
+            .catch(error => console.log(error))
+		}
+		
+	</script>
+</body>
+</html>
